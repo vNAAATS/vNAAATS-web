@@ -33,10 +33,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/lodash": "^4.14.172",
 		"@types/node-cron": "^2.0.4",
 		"concurrently": "^6.2.1",
 		"cron": "^1.8.2",
 		"cross-env": "^7.0.3",
+		"lodash": "^4.17.21",
 		"node-cron": "^3.0.0",
 		"node-schedule": "^2.0.0",
 		"postcss-cli": "^8.3.1"

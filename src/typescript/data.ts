@@ -1,5 +1,9 @@
+/* eslint-disable no-self-assign */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-const */
 import { CronJob } from 'cron';
-import { onMount } from 'svelte';
 import type { Aircraft, NatTrack, Waypoint, TrackDirection } from './objects';
 
 // Link constants
@@ -10,8 +14,9 @@ const allAircraftGet = "https://vnaaats-net.ganderoceanic.ca/api/FlightDataAllGe
 // Data lists
 export let trackError: boolean = false;
 export let currentTMI: string = "";
-export let currentNatTracks: NatTrack[] = [];
-export let networkAircraft: Aircraft[] =  [];
+export let currentNatTracks: Map<string, NatTrack> = new Map();
+export let networkAircraft: Map<string, Map<string, Aircraft>> =  new Map();
+export let aircraftCount:number = 0;
 
 // Json interface
 interface JsonAcObj {
@@ -30,7 +35,7 @@ interface JsonAcObj {
     lastUpdated: string;
 }
 
-export function parseNatTracks() : void {
+export function parseNatTracks() {
     // Dynamic data variable
     let res = "";
     console.log("Downloading Track Data.");
@@ -65,7 +70,7 @@ export function parseNatTracks() : void {
             if (!isUpdateReqd) return;
 
             // Purge existing tracks
-            currentNatTracks = [];
+            currentNatTracks = new Map();
 
             // Assign TMI
             currentTMI = objArr[0].tmi;
@@ -78,13 +83,14 @@ export function parseNatTracks() : void {
                     Route: objArr[i].route,
                     FlightLevels: objArr[i].flightLevels,
                     Direction: objArr[i].direction,
-                    ValidFrom: Date.parse(objArr[i].validFrom),
-                    ValidTo: Date.parse(objArr[i].validTo)
+                    ValidFrom: parseInt(objArr[i].validFrom),
+                    ValidTo: parseInt(objArr[i].validTo)
                 }
-                currentNatTracks.push(track);
+                currentNatTracks.set(track.Identifier, track);
             }
-
-            console.log(currentNatTracks);
+            
+            // Force svelte to update the dom
+            currentNatTracks = currentNatTracks;
         });
     });
     return;
@@ -94,7 +100,7 @@ export function populateAllAircraft() {
     // Dynamic data variable
     let res = "";
     console.log("Populating aircraft array.");
-
+    
     fetch(allAircraftGet)
     .then(function(response) {
         response.text().then(function(text) {
@@ -102,13 +108,45 @@ export function populateAllAircraft() {
             res = text;
             let objArr: JsonAcObj[] = JSON.parse(res);
 
-            // Overwrite data
-            let temp: Aircraft[] =  [];
+            // Purge map if new tracks found
+            if (networkAircraft.size != currentNatTracks.size-1)
+            {
+                // Bye bye
+                networkAircraft = new Map();
+                
+                // Re-instantiate tracks
+                currentNatTracks.forEach(function(value,key) {
+                    networkAircraft.set(key, new Map());
+                });
+
+                // And add random route for good measure :)
+                networkAircraft.set("RR", new Map());
+            }
+            else {
+                // Just reset the already existing aircraft maps
+                networkAircraft.forEach(function(value,key) {
+                    networkAircraft.set(key, new Map());
+                });
+                // Just in case
+                networkAircraft.set("RR", new Map());
+            }
+
+            // Set counter
+            aircraftCount = objArr.length;
 
             for(let i:number = 0; i < objArr.length; i++) {
                 // Parse route
                 let routePoints: string[] = objArr[i].route.split(' ');
                 let routeEtas: string[] = objArr[i].routeEtas.split(' ');
+
+                // Get direction
+                let dir: boolean;
+                if (objArr[i].track != "RR" ) {
+                    dir = currentNatTracks.get(objArr[i].track).Direction == 2 ? true : false;
+                } else {
+                    dir = false;
+                }
+
                 let ac: Aircraft = { 
                     Callsign: objArr[i].callsign,
                     AssignedLevel: objArr[i].assignedLevel,
@@ -120,32 +158,31 @@ export function populateAllAircraft() {
                     Arrival: objArr[i].arrival,
                     IsEquipped:  objArr[i].isEquipped,
                     TrackedBy: objArr[i].trackedBy,
+                    Direction: dir,
                     LastUpdated: Date.parse(objArr[i].lastUpdated)
-                }          
-                temp.push(ac);
+                }
+                // Check the track
+                if (ac.Track != "RR" && currentNatTracks.has(ac.Track)) {
+                    networkAircraft.get(ac.Track).set(ac.Callsign, ac);
+                }
+                else {
+                    networkAircraft.get("RR").set(ac.Callsign, ac);
+                }
             }
-
-            // Overwrite
-            networkAircraft = temp;
-            console.log(networkAircraft);
         });
     });
     return;
-}
-
-export function getSingleAircraft(callsign: string) : void {
-
 }
 
 export function runDataFetcher() {        
     console.log("Cron starting...")
     
     // First population
-    populateAllAircraft();
     parseNatTracks();
+    populateAllAircraft();
 
     // Aircraft cron
-    let acJob = new CronJob('*/15 * * * * *', populateAllAircraft, null, true);
+    let acJob = new CronJob('*/5 * * * * *', populateAllAircraft, null, true);
     
     // Tracks cron
     let tkJob = new CronJob('0 */5 * * * *', parseNatTracks, null, true);

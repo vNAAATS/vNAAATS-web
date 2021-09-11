@@ -5,7 +5,7 @@ export type Aircraft = {
     AssignedMach: number;
     Track: string;
     Route: string[];
-    RouteEtas:string[];
+    RouteEtas: string[];
     Departure: string;
     Arrival: string;
     Direction?: boolean;
