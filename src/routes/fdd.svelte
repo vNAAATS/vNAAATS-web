@@ -1,8 +1,13 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import Button from "../props/button.svelte";
+
     // Initialisation of data
-    import {DataFetcher} from "../typescript/data";
-    let promise = DataFetcher.runDataFetcher();
+    import {runDataFetcher} from "../typescript/data";
+    onMount(async () => {
+        runDataFetcher();
+    });
+    
 </script>    
 
 <!-- The main flight data panel with flight strips -->

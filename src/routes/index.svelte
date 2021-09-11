@@ -3,10 +3,10 @@
 </script>
 
 <div class="flex h-screen">
-    <div class="flex flex-row w-3/5 bg-blue-3 border-blue-10 border-2">
+    <div class="flex flex-row w-3/5 bg-blue-2 border-l-blue-10 border-t-blue-10 border-r-blue-3 border-b-blue-3 border-2">
         <FDD/>
     </div>
-    <div class="flex flex-row w-2/5 bg-blue-3 bg-screen border-blue-10 border-2">
+    <div class="flex px-0.5 flex-row w-2/5 bg-blue-2 border-l-blue-10 border-t-blue-10 border-r-blue-3 border-b-blue-3 bg-screen border-2">
     
     </div>
 </div>

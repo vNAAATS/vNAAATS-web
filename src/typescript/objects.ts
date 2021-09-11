@@ -1,4 +1,4 @@
-interface Aircraft {
+export type Aircraft = {
     Callsign: string;
     Type?: string;
     AssignedLevel: number;
@@ -14,25 +14,25 @@ interface Aircraft {
     LastUpdated: number;
 }
 
-
-interface Waypoint {
-    Name: string;
-    Latitude: number;
-    Longitude: number;
+export type Waypoint = {
+    name: string;
+    latitude: number;
+    longitude: number;
 }
 
-enum TrackDirection {
+export enum TrackDirection {
     Unknown,
     Westbound,
     Eastbound
 }
 
-interface NatTrack {
+export type NatTrack = {
     Identifier: string;
     TMI: string;
     Route: Waypoint[];
     FlightLevels: number[];
     Direction: TrackDirection;
-    ValidTo: Date;
-    ValidFrom: Date;
+    ValidTo: number;
+    ValidFrom: number;
 }
+
