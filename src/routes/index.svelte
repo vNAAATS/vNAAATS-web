@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FDD from './fdd.svelte';
-import FlightPlan from './flight_plan.svelte';
+    import FlightPlan from './flight_plan.svelte';
     import Tracks from './tracks.svelte'
 </script>
 
