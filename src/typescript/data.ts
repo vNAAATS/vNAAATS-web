@@ -35,13 +35,13 @@ interface JsonAcObj {
     lastUpdated: string;
 }
 
-export function parseNatTracks() {
+export async function parseNatTracks() {
     // Dynamic data variable
     let res = "";
     console.log("Downloading Track Data.");
 
     // Get the data
-    fetch(natTracksApi)
+    await fetch(natTracksApi)
     .then(function(response) {
         response.text().then(function(text) {
             // Parse to json
@@ -96,12 +96,12 @@ export function parseNatTracks() {
     return;
 }
 
-export function populateAllAircraft() {
+export async function populateAllAircraft() {
     // Dynamic data variable
     let res = "";
     console.log("Populating aircraft array.");
     
-    fetch(allAircraftGet)
+    await fetch(allAircraftGet)
     .then(function(response) {
         response.text().then(function(text) {
             // Parse json
@@ -141,7 +141,7 @@ export function populateAllAircraft() {
 
                 // Get direction
                 let dir: boolean;
-                if (objArr[i].track != "RR" ) {
+                if (objArr[i].track != "RR") {
                     dir = currentNatTracks.get(objArr[i].track).Direction == 2 ? true : false;
                 } else {
                     dir = false;
@@ -181,11 +181,12 @@ export function runDataFetcher() {
     parseNatTracks();
     populateAllAircraft();
 
-    // Aircraft cron
-    let acJob = new CronJob('*/5 * * * * *', populateAllAircraft, null, true);
+    /* NB: We need to do the cron with each increment of 5 otherwise the methods run several times */
+    // Aircraft cron (run every 5 seconds)
+    let acJob = new CronJob('0,5,10,15,20,25,30,35,40,45,50,55 * * * * *', populateAllAircraft, null, true);
     
-    // Tracks cron
-    let tkJob = new CronJob('0 */5 * * * *', parseNatTracks, null, true);
+    // Tracks cron (run every 5 seconds)
+    let tkJob = new CronJob('0 0,5,10,15,20,25,30,35,40,45,50,55 * * * *', parseNatTracks, null, true);
 
     acJob.start();
     tkJob.start();

@@ -55,7 +55,9 @@ const config = {
 				"1/10": "10%",
 				"1/14": "7.14285714286%",
 				"1/11": "9.72%",
-				"0.48": "47.7%" // This is to align the track header with the list items
+				"0.48": "47.7%", // This is to align the track header with the list items
+				"0.32": "32.5%",
+				"0.68": "68.8%"
 			  }
 		},
 	},

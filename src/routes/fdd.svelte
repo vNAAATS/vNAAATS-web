@@ -3,12 +3,13 @@
     import { onMount } from "svelte";
     import * as utils from "../typescript/utils";
     import Button from "../props/button.svelte";
+    import Checkbox from "../props/checkbox.svelte";
     import FlightStrip from "../props/flight_strip.svelte"
+    import * as dataHandler from "../typescript/data";
 
     // Initialisation of data
     let isLoading: boolean = true;
     let noData: boolean = true;
-    import * as dataHandler from "../typescript/data";
     onMount(async () => {
         dataHandler.runDataFetcher();
     });
@@ -27,9 +28,7 @@
             dataHandler.networkAircraft.forEach(function(value, key) {
                 if (value.size > 0) noData = false;
             });
-        } 
-        
-
+        }
     }, null, true);
     acJob.start();   
 </script>    
@@ -41,20 +40,23 @@
             <div class="px-3">
                 <Button label="Default"/>
             </div>
-            <div class="px-5">
-                <div class="flex items-center min-w-1 h-8 px-5 border-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
-                    FILTERS
+            <div class="px-0.5">
+                <div class="flex items-center justify-between min-w-5 h-9 px-3 border-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+                    <Checkbox identifier={"1"} label={"PST"} />
+                    <Checkbox identifier={"1"} label={"FaD"} />
+                    <Checkbox identifier={"1"} label={"WST"} />
+                    <Checkbox identifier={"1"} label={"TERM"} />
                 </div> 
             </div>
         </div>
-        <div class="flex flex-row items-center justify-end w-1/4">
+        <div class="flex flex-row items-center justify-end w-1/5">
             <div class="flex-row px-3">
-                <div class="h-10 px-3 text-2xl border-2 bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+                <div class="flex items-center h-10 px-3 text-2xl border-2 bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
                     12:45
                 </div>
             </div>
             <div class="flex-row px-3">
-                <div class="h-10 px-3 text-2xl border-2 bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+                <div class="flex items-center h-10 px-3 text-2xl border-2 bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
                     123
                 </div>
             </div>
@@ -63,30 +65,8 @@
             <div class="px-3">
                 <Button label="Default"/>
             </div>
-            <div class="px-3">
-                <div class="flex items-center min-w-1 h-8 px-4 border-2 border-r-blue-8 border-b-blue-8 border-l-blue-1 border-t-blue-1">
-                    <button class="px-3 text-yellow-200 hover:text-opacity-80 font-bitmap text-xl">
-                        HL
-                    </button>
-                    <div class="text-yellow-200 text-xs">
-                        •
-                    </div>
-                    <button class="px-3 text-yellow-200 hover:text-opacity-80 font-bitmap text-xl">
-                        LL
-                    </button>
-                    <div class="text-yellow-200 text-xs">
-                        •
-                    </div>
-                    <button class="px-3 text-yellow-200 hover:text-opacity-80 font-bitmap text-xl">
-                        ALL TK
-                    </button>
-                    <div class="text-yellow-200 text-xs">
-                        •
-                    </div>
-                    <button class="px-3 text-yellow-200 hover:text-opacity-80 font-bitmap text-xl">
-                        RR
-                    </button>
-                </div>
+            <div class="px-3 font-bitmap font-thin text-xl">
+                <Button label={"HL • LL • ALL TK • RR"} font={"bitmap"} bold={"false"} textColour={"text-yellow-300"} />
             </div>
         </div>
     </div>
@@ -99,7 +79,7 @@
         {:else}
             {#if noData}
                 <div class="flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10">
-                    No data to download yet.
+                    No data found to download.
                 </div>
             {:else}
             {#each acListKeys as acTrack}
@@ -125,7 +105,7 @@
                 {/if}
                 {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
                     <FlightStrip callsign={ac.Callsign} assignedLevel={ac.AssignedLevel} 
-                    assignedMach={ac.AssignedMach} track={ac.Track} routeEtas={ac.RouteEtas} departure={ac.Departure} arrival={ac.Arrival} 
+                    assignedMach={ac.AssignedMach} track={ac.Track} route={ac.Route} routeEtas={ac.RouteEtas} departure={ac.Departure} arrival={ac.Arrival} 
                     trackedBy={ac.TrackedBy} isEquipped={ac.IsEquipped} direction={ac.Direction} />
                 {/each}
             {/each}
