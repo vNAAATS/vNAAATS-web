@@ -11,3 +11,14 @@ export function coordToArray(coord: string) : string[] {
     
     return []; // Default to empty array because it's a named waypoint
 }
+
+export function parseTime(dateTime: Date) : string {
+    let rawHours: number = dateTime.getHours();
+    let rawMinutes = dateTime.getMinutes();
+    
+    // Pad the zeros
+    let hours: string = rawHours > 9 ? rawHours.toString() : "0" + rawHours.toString();
+    let minutes: string = rawMinutes > 9 ? rawMinutes.toString() : "0" + rawMinutes.toString();
+
+    return hours + ":" + minutes;
+}

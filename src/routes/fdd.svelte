@@ -6,6 +6,7 @@
     import Checkbox from "../props/checkbox.svelte";
     import FlightStrip from "../props/flight_strip.svelte"
     import * as dataHandler from "../typescript/data";
+import { times } from 'lodash';
 
     // Initialisation of data
     let isLoading: boolean = true;
@@ -15,11 +16,23 @@
     });
 
 
+    // Externals
     $: acListKeys = [...dataHandler.networkAircraft.keys()];
+    $: tmi = dataHandler.currentTMI;
+    
+    // Time string
+    $: timeString = utils.parseTime(new Date());
 
     // DOM updater
     let acJob = new CronJob('*/1 * * * * *', function() {
+        // Reset externals
         acListKeys = [...dataHandler.networkAircraft.keys()];
+        tmi = dataHandler.currentTMI;
+
+        // Update time
+        timeString = utils.parseTime(new Date());
+
+        // Handle 'loading' and 'no content'
         if (dataHandler.networkAircraft.size > 1 && isLoading) {
             // we can assume if the tracks are downloaded that the data is done loading
             isLoading = false;
@@ -37,10 +50,10 @@
 <div class="flex flex-col w-screen">
     <div class="flex flex-row justify-around w-full h-1/14 border-blue-10 border-b-2 text-white p-5 font-regular font-light">
         <div class="flex flex-row items-center justify-start">
-            <div class="px-3">
+            <div class="px-3 hover:cursor-default">
                 <Button label="Default"/>
             </div>
-            <div class="px-0.5">
+            <div class="px-0.5 hover:cursor-default">
                 <div class="flex items-center justify-between min-w-5 h-9 px-3 border-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
                     <Checkbox identifier={"1"} label={"PST"} />
                     <Checkbox identifier={"1"} label={"FaD"} />
@@ -51,21 +64,21 @@
         </div>
         <div class="flex flex-row items-center justify-end w-1/5">
             <div class="flex-row px-3">
-                <div class="flex items-center h-10 px-3 text-2xl border-2 bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
-                    12:45
+                <div class="select-none flex items-center h-10 px-3 text-2xl border-2 hover:cursor-default bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+                    {timeString}
                 </div>
             </div>
             <div class="flex-row px-3">
-                <div class="flex items-center h-10 px-3 text-2xl border-2 bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
-                    123
+                <div class="select-none flex items-center h-10 px-3 text-2xl border-2 hover:cursor-default bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+                    {tmi != "" ? tmi : "000"}
                 </div>
             </div>
         </div>
         <div class="flex flex-row-reverse items-center">
-            <div class="px-3">
+            <div class="px-3 hover:cursor-default">
                 <Button label="Default"/>
             </div>
-            <div class="px-3 font-bitmap font-thin text-xl">
+            <div class="px-3 font-bitmap font-thin text-xl hover:cursor-default">
                 <Button label={"HL • LL • ALL TK • RR"} font={"bitmap"} bold={"false"} textColour={"text-yellow-300"} />
             </div>
         </div>
@@ -73,18 +86,18 @@
     <div class="flex flex-col h-full font-bitmap font-light text-lg">
         <!-- Aircraft component cards -->
         {#if isLoading}
-        <div class="flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10">
+        <div class="select-none flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10 hover:cursor-default">
             Loading data...
         </div>
         {:else}
             {#if noData}
-                <div class="flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10">
+                <div class="select-none flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10 hover:cursor-default">
                     No data found to download.
                 </div>
             {:else}
             {#each acListKeys as acTrack}
                 {#if dataHandler.networkAircraft.get(acTrack).size != 0}
-                <div class="flex flex-row justify-start w-full bg-grey-500 bg-opacity-70">
+                <div class="flex flex-row justify-start w-full bg-grey-500 bg-opacity-70 select-none hover:cursor-default">
                     <div class="w-0.48 px-3">
                         {acTrack != "RR" ? acTrack : "RANDOM"}
                     </div>

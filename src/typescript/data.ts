@@ -71,10 +71,6 @@ export async function parseNatTracks() {
 
             // Purge existing tracks
             currentNatTracks = new Map();
-
-            // Assign TMI
-            currentTMI = objArr[0].tmi;
-
             // Now assign
             for(let i:number = 0; i < objArr.length; i++) {
                 let track: NatTrack = {
@@ -91,6 +87,9 @@ export async function parseNatTracks() {
             
             // Force svelte to update the dom
             currentNatTracks = currentNatTracks;
+
+            // Assign TMI
+            currentTMI = objArr[0].tmi;
         });
     });
     return;
@@ -144,7 +143,7 @@ export async function populateAllAircraft() {
                 if (objArr[i].track != "RR") {
                     dir = currentNatTracks.get(objArr[i].track).Direction == 2 ? true : false;
                 } else {
-                    dir = false;
+                    dir = true;
                 }
 
                 let ac: Aircraft = { 
