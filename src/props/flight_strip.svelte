@@ -14,8 +14,8 @@
     export let isEquipped: boolean;
     export let trackedBy: string;
     
-    let colour:string = direction ? "bg-blue-11":"bg-yellow-100";
-    let darkerColour:string = direction ?  "bg-blue-10" : "bg-yellow-200";
+    let colour:string = direction ? "bg-blue-10":"bg-yellow-100";
+    let darkerColour:string = direction ?  "bg-blue-9" : "bg-yellow-200";
     let opacity:string = "bg-opacity-75";
 
     // Opacity
@@ -30,7 +30,7 @@
     
 </script>
 
-<div class="hover:border-green-400 hover:border-2">
+<div class="hover:border-green-500 hover:border-2">
     {#if track === "RR"}
     <div class="flex flex-col items-center w-full h-14 {darkerColour} {isActive ? "bg-opacity-75" : ""} text-black hover:cursor-default" on:mousedown={stripMouseDown} on:mouseup={stripMouseUp} on:mouseleave={stripMouseUp}>
         <div class="flex flex-row justify-start items-center w-full">
@@ -60,7 +60,7 @@
         <div class="flex flex-row w-1/7 px-2 hover:cursor-default select-none">
             {callsign + (!isEquipped ? "*" : "")}
         </div>
-        <div class="flex flex-row w-5/7 hover:cursor-default select-none">
+        <div class="flex flex-row w-5/7 hover:cursor-default select-none"> <!-- TODO fix this alignment -->
             <div class="w-1/7">
                 {departure}/{arrival}
             </div>
@@ -80,7 +80,7 @@
             <div class="w-1/3">
                 B789
             </div>
-            <div class="w-2/5">
+            <div class="w-3/7">
                 {trackedBy != "" ? trackedBy : "\xa0"}
             </div>
         </div>

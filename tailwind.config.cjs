@@ -27,13 +27,13 @@ const config = {
 				"7": "#5D8FCD",
 				"8": "#78A2D5",
 				"9": "#93B5DE",
-				"10": "#BBD6EE", // vNAAATS plugin window border colour
+				"10": "#b4e5ff", // vNAAATS plugin window border colour
 				"11": "#bde8ff"
 			}
 		},
 		fontFamily: {
 			"regular": ["Verdana, sans-serif"],
-			"mono": ["Lucida Console, mono"],
+			"mono": ["Courier, mono"],
 			"bitmap": ["Expo"]
 		},
 		extend: {
@@ -53,6 +53,7 @@ const config = {
 				"1/15": "6.66666%",
 				"1/20": "5%",
 				"1/10": "10%",
+				"1/9": "11.1111111111%",
 				"1/14": "7.14285714286%",
 				"1/11": "9.72%",
 				"0.48": "47.7%", // This is to align the track header with the list items
@@ -82,7 +83,10 @@ const config = {
 			const utilities = Object.assign({}, ...colorMap);
 
 			addUtilities(utilities, variants('borderColor'));
+
+			
 		},
+		require('tailwind-scrollbar')
 	],
 };
 

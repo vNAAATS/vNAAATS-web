@@ -1,1 +1,26 @@
 /* Custom styles needed outside of tailwind */
+
+/* Scroll bar customisation */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #142942;
+    border-right: 2px solid rgba(66,125,197, 1);
+    border-bottom: 2px solid rgba(66,125,197, 1);
+    border-top: 2px solid rgba(12,24,39, 1);
+    border-left: 2px solid rgba(12,24,39, 1);
+    
+    
+}
+
+::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-clip: content-box;
+    background-color: #1D395D;
+    border-top: 2px solid rgba(66,125,197, 1);
+    border-left: 2px solid rgba(66,125,197, 1);
+    border-right: 2px solid rgba(12,24,39, 1);
+    border-bottom: 2px solid rgba(12,24,39, 1);
+}

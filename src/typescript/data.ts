@@ -78,7 +78,7 @@ export async function parseNatTracks() {
                     TMI: objArr[i].tmi,
                     Route: objArr[i].route,
                     FlightLevels: objArr[i].flightLevels,
-                    Direction: objArr[i].direction,
+                    Direction: objArr[i].direction == 1 || objArr[i].direction == 2 ? (objArr[i].direction - 1) : objArr[i].direction,
                     ValidFrom: parseInt(objArr[i].validFrom),
                     ValidTo: parseInt(objArr[i].validTo)
                 }
@@ -141,7 +141,7 @@ export async function populateAllAircraft() {
                 // Get direction
                 let dir: boolean;
                 if (objArr[i].track != "RR") {
-                    dir = currentNatTracks.get(objArr[i].track).Direction == 2 ? true : false;
+                    dir = currentNatTracks.get(objArr[i].track).Direction == 1 ? true : false;
                 } else {
                     dir = true;
                 }

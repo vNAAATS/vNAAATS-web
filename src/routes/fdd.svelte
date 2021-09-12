@@ -6,7 +6,6 @@
     import Checkbox from "../props/checkbox.svelte";
     import FlightStrip from "../props/flight_strip.svelte"
     import * as dataHandler from "../typescript/data";
-import { times } from 'lodash';
 
     // Initialisation of data
     let isLoading: boolean = true;
@@ -47,7 +46,7 @@ import { times } from 'lodash';
 </script>    
 
 <!-- The main flight data panel with flight strips -->
-<div class="flex flex-col w-screen">
+<div class="flex flex-col w-full border-b-2 border-r-2 border-blue-10">
     <div class="flex flex-row justify-around w-full h-1/14 border-blue-10 border-b-2 text-white p-5 font-regular font-light">
         <div class="flex flex-row items-center justify-start">
             <div class="px-3 hover:cursor-default">
@@ -83,7 +82,7 @@ import { times } from 'lodash';
             </div>
         </div>
     </div>
-    <div class="flex flex-col h-full font-bitmap font-light text-lg">
+    <div class="flex flex-col h-full font-bitmap font-light text-lg overflow-y-scroll overflow-x-hidden">
         <!-- Aircraft component cards -->
         {#if isLoading}
         <div class="select-none flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10 hover:cursor-default">
@@ -98,7 +97,7 @@ import { times } from 'lodash';
             {#each acListKeys as acTrack}
                 {#if dataHandler.networkAircraft.get(acTrack).size != 0}
                 <div class="flex flex-row justify-start w-full bg-grey-500 bg-opacity-70 select-none hover:cursor-default">
-                    <div class="w-0.48 px-3">
+                    <div class="w-1/2 px-3">
                         {acTrack != "RR" ? acTrack : "RANDOM"}
                     </div>
                     <div class="flex flex-row w-full justify-start">

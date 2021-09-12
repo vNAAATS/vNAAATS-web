@@ -21,9 +21,9 @@ export type Waypoint = {
 }
 
 export enum TrackDirection {
-    Unknown,
-    Westbound,
-    Eastbound
+    Unknown = 0,
+    Westbound = 1,
+    Eastbound = 2
 }
 
 export type NatTrack = {
@@ -31,7 +31,7 @@ export type NatTrack = {
     TMI: string;
     Route: Waypoint[];
     FlightLevels: number[];
-    Direction: TrackDirection;
+    Direction: number;
     ValidTo: number;
     ValidFrom: number;
 }
