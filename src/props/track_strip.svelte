@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Waypoint } from "src/typescript/objects";
+    import type { Waypoint } from "src/typescript/objects";
 
     export let id: string;
     export let route: Waypoint[];
@@ -8,12 +8,12 @@ import type { Waypoint } from "src/typescript/objects";
     export let validFrom: number;
     export let validTo: number;
     
+    // Format the time validity
     let vFDate: Date = new Date(validFrom*1000);
     let vTDate: Date = new Date(validTo*1000);
 
     let vFString: string = (vFDate.getUTCHours() < 9 ? "0" + vFDate.getUTCHours() : vFDate.getUTCHours()).toString() 
     + (vFDate.getUTCMinutes() < 9 ? "0" + vFDate.getUTCMinutes() : vFDate.getUTCMinutes()).toString();
-
     let vTString: string = (vTDate.getUTCHours() < 9 ? "0" + vTDate.getUTCHours() : vTDate.getUTCHours()).toString() 
      + (vTDate.getUTCMinutes() < 9 ? "0" + vTDate.getUTCMinutes() : vTDate.getUTCMinutes()).toString();
 

@@ -8,9 +8,14 @@ export type Aircraft = {
     RouteEtas: string[];
     Departure: string;
     Arrival: string;
+    Etd?: string;
+    Selcal?: string;
+    Datalink?: string;
+    SectorID?: string;
     Direction?: boolean;
     IsEquipped: boolean;
     TrackedBy: string;
+    State?: string;
     LastUpdated: number;
 }
 

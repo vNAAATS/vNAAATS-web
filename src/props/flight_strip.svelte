@@ -1,5 +1,7 @@
 <script lang="ts">
     import * as utils from "../typescript/utils";
+    import * as dataHandler from "../typescript/data"
+
     // Elements for spread prop
     export let callsign: string;
     //export let type: string;
@@ -30,7 +32,7 @@
     
 </script>
 
-<div class="hover:border-green-500 hover:border-2">
+<div class="hover:border-green-500 hover:border-2" on:click={() => dataHandler.setAsel(callsign)}>
     {#if track === "RR"}
     <div class="flex flex-col items-center w-full h-14 {darkerColour} {isActive ? "bg-opacity-75" : ""} text-black hover:cursor-default" on:mousedown={stripMouseDown} on:mouseup={stripMouseUp} on:mouseleave={stripMouseUp}>
         <div class="flex flex-row justify-start items-center w-full">

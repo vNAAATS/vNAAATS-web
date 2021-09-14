@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { CronJob } from 'cron';
     import { onMount } from "svelte";
     import * as utils from "../typescript/utils";
     import Button from "../props/button.svelte";
@@ -22,12 +21,12 @@
     // Time string
     $: timeString = utils.parseTime(new Date());
 
-    // DOM updater
-    let acJob = new CronJob('*/1 * * * * *', function() {
+    // DOM updater (1 second)
+    setInterval(() => {
         // Reset externals
         acListKeys = [...dataHandler.networkAircraft.keys()];
         tmi = dataHandler.currentTMI;
-
+        
         // Update time
         timeString = utils.parseTime(new Date());
 
@@ -36,13 +35,12 @@
             // we can assume if the tracks are downloaded that the data is done loading
             isLoading = false;
 
-            // Check however that we have planes so that we may be able to display "no content" message to display.
+            // Check however that we have planes so that we may be able to display "no content" message.
             dataHandler.networkAircraft.forEach(function(value, key) {
-                if (value.size > 0) noData = false;
+                if (Array.from(value.keys()).length > 0) noData = false;
             });
         }
-    }, null, true);
-    acJob.start();   
+    }, 1000);
 </script>    
 
 <!-- The main flight data panel with flight strips -->
@@ -118,7 +116,7 @@
                 {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
                     <FlightStrip callsign={ac.Callsign} assignedLevel={ac.AssignedLevel} 
                     assignedMach={ac.AssignedMach} track={ac.Track} route={ac.Route} routeEtas={ac.RouteEtas} departure={ac.Departure} arrival={ac.Arrival} 
-                    trackedBy={ac.TrackedBy} isEquipped={ac.IsEquipped} direction={ac.Direction} />
+                    trackedBy={ac.TrackedBy} isEquipped={ac.IsEquipped} direction={ac.Direction} on:click />
                 {/each}
             {/each}
             {/if}

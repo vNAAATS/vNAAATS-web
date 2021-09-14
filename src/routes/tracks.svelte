@@ -35,7 +35,7 @@
 </script>
 
 <div class="flex flex-col w-full h-1/3 border-2 border-t-blue-0 border-l-blue-0 font-bitmap text-xl font-thin">
-    <Titlebar label="Tracks - TMI: {dataHandler.currentTMI}" />
+    <Titlebar label="Tracks - TMI: {tmi}" />
     <div class="overflow-y-scroll h-full">
         <div class="flex">
 

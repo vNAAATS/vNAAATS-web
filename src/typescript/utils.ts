@@ -13,8 +13,8 @@ export function coordToArray(coord: string) : string[] {
 }
 
 export function parseTime(dateTime: Date) : string {
-    let rawHours: number = dateTime.getHours();
-    let rawMinutes = dateTime.getMinutes();
+    let rawHours: number = dateTime.getUTCHours();
+    let rawMinutes = dateTime.getUTCMinutes();
     
     // Pad the zeros
     let hours: string = rawHours > 9 ? rawHours.toString() : "0" + rawHours.toString();

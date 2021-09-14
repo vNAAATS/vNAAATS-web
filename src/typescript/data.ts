@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { CronJob } from 'cron';
+import { find } from 'lodash';
 import type { Aircraft, NatTrack, Waypoint, TrackDirection } from './objects';
 
 // Link constants
@@ -17,6 +18,9 @@ export let currentTMI: string = "";
 export let currentNatTracks: Map<string, NatTrack> = new Map();
 export let networkAircraft: Map<string, Map<string, Aircraft>> =  new Map();
 export let aircraftCount:number = 0;
+
+// Selected aircraft
+export let asel: Aircraft = null;
 
 // Json interface
 interface JsonAcObj {
@@ -33,6 +37,42 @@ interface JsonAcObj {
     isEquipped: boolean;
     trackedBy: string;
     lastUpdated: string;
+}
+
+export function findAircraftLocal(callsign: string) : Aircraft {
+    let found: boolean = false;
+    let ac: Aircraft;
+    
+    // Loop through each of the aircraft maps to check for  matches
+    networkAircraft.forEach((value, key) => {
+        if (value.size < 1) return; // no data to check so skip
+        // If not undefined then we have a match so set it
+        if (value.get(callsign) != null && value.get(callsign).Callsign != undefined) {
+            // we found it
+            ac = value.get(callsign);
+            found = true;
+            return;
+        }
+        return;
+    });
+
+    // Return it
+    // we didn't find it :(
+    return found ? ac : null;
+}
+
+export function setAsel(callsign: string) : void {
+    // Check if exists and check to see if it matches
+    if (asel != null && callsign === asel.Callsign) {
+        return;
+    }
+
+    // Doesn't match so assign
+    let found: Aircraft  = findAircraftLocal(callsign);
+
+    if (found != null) {
+        asel = found;
+    }
 }
 
 export async function parseNatTracks() {
@@ -132,18 +172,19 @@ export async function populateAllAircraft() {
 
             // Set counter
             aircraftCount = objArr.length;
-
-            for(let i:number = 0; i < objArr.length; i++) {
+            
+            for(let i:number = 0; i < aircraftCount; i++) {
                 // Parse route
                 let routePoints: string[] = objArr[i].route.split(' ');
                 let routeEtas: string[] = objArr[i].routeEtas.split(' ');
 
                 // Get direction
                 let dir: boolean;
-                if (objArr[i].track != "RR") {
+                if (objArr[i].track != "RR" && currentNatTracks.get(objArr[i].track) != null) {
                     dir = currentNatTracks.get(objArr[i].track).Direction == 1 ? true : false;
                 } else {
                     dir = true;
+                    objArr[i].track = "RR"
                 }
 
                 let ac: Aircraft = { 
@@ -160,8 +201,9 @@ export async function populateAllAircraft() {
                     Direction: dir,
                     LastUpdated: Date.parse(objArr[i].lastUpdated)
                 }
-                // Check the track
+                // Check the track;
                 if (ac.Track != "RR" && currentNatTracks.has(ac.Track)) {
+                    
                     networkAircraft.get(ac.Track).set(ac.Callsign, ac);
                 }
                 else {
@@ -182,11 +224,11 @@ export function runDataFetcher() {
 
     /* NB: We need to do the cron with each increment of 5 otherwise the methods run several times */
     // Aircraft cron (run every 5 seconds)
-    let acJob = new CronJob('0,5,10,15,20,25,30,35,40,45,50,55 * * * * *', populateAllAircraft, null, true);
-    
+    setInterval(() => {
+        populateAllAircraft();
+    }, 5000);
+
     // Tracks cron (run every 5 seconds)
     let tkJob = new CronJob('0 0,5,10,15,20,25,30,35,40,45,50,55 * * * *', parseNatTracks, null, true);
-
-    acJob.start();
     tkJob.start();
 }

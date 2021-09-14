@@ -1,15 +1,14 @@
 <script lang="ts">
-import { CronJob } from 'cron';
 import "../styles/globals.postcss";
 import * as dataHandler from "../typescript/data"
 
 let count: number = 0;
 
 // DOM updater
-let countJob = new CronJob('*/1 * * * * *', function() {
-        count = dataHandler.aircraftCount;
-}, null, true);
-countJob.start();
+// Component updater (50ms)
+setInterval(() => {
+    count = dataHandler.aircraftCount;
+}, 50);
 </script>
 
 <div class="flex flex-col h-screen">
