@@ -17,7 +17,8 @@ export let trackError: boolean = false;
 export let currentTMI: string = "";
 export let currentNatTracks: Map<string, NatTrack> = new Map();
 export let networkAircraft: Map<string, Map<string, Aircraft>> =  new Map();
-export let aircraftCount:number = 0;
+export let aircraftCount: number = 0;
+export let sortAscending: boolean = false;
 
 // Selected aircraft
 export let asel: Aircraft = null;
@@ -140,7 +141,7 @@ export async function populateAllAircraft() {
     let res = "";
     console.log("Populating aircraft array.");
     
-    await fetch(allAircraftGet)
+    await fetch(allAircraftGet + (sortAscending ? "?sort=1" : "?sort=0"))
     .then(function(response) {
         response.text().then(function(text) {
             // Parse json
@@ -201,7 +202,7 @@ export async function populateAllAircraft() {
                     Direction: dir,
                     LastUpdated: Date.parse(objArr[i].lastUpdated)
                 }
-                // Check the track;
+                // Check the track
                 if (ac.Track != "RR" && currentNatTracks.has(ac.Track)) {
                     
                     networkAircraft.get(ac.Track).set(ac.Callsign, ac);

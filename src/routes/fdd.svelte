@@ -18,6 +18,7 @@
     $: acListKeys = [...dataHandler.networkAircraft.keys()];
     $: tmi = dataHandler.currentTMI;
     
+    
     // Time string
     $: timeString = utils.parseTime(new Date());
 
@@ -89,7 +90,7 @@
         {:else}
             {#if noData}
                 <div class="select-none flex flex-row w-full h-full justify-items-center justify-center text-2xl my-10 hover:cursor-default">
-                    No data found to download.
+                    No data on remote.
                 </div>
             {:else}
             {#each acListKeys as acTrack}
@@ -116,7 +117,7 @@
                 {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
                     <FlightStrip callsign={ac.Callsign} assignedLevel={ac.AssignedLevel} 
                     assignedMach={ac.AssignedMach} track={ac.Track} route={ac.Route} routeEtas={ac.RouteEtas} departure={ac.Departure} arrival={ac.Arrival} 
-                    trackedBy={ac.TrackedBy} isEquipped={ac.IsEquipped} direction={ac.Direction} on:click />
+                    trackedBy={ac.TrackedBy} isEquipped={ac.IsEquipped} direction={ac.Direction} />
                 {/each}
             {/each}
             {/if}
