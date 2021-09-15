@@ -4,7 +4,7 @@
  */
 export type Aircraft = {
   Callsign: string;
-  Type?: string;
+  Type: string;
   AssignedLevel: number;
   AssignedMach: number;
   Track: string;
@@ -12,14 +12,16 @@ export type Aircraft = {
   RouteEtas: string[];
   Departure: string;
   Arrival: string;
-  Etd?: string;
-  Selcal?: string;
-  Datalink?: string;
-  SectorID?: string;
-  Direction?: boolean;
+  Etd: string;
+  Selcal: string;
+  Datalink: boolean;
+  SectorID: string;
+  Direction: boolean;
   IsEquipped: boolean;
   TrackedBy: string;
-  State?: string;
+  State: string;
+  Relevant: boolean;
+  TargetMode: number;
   LastUpdated: number;
 };
 

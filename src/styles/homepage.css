@@ -1,0 +1,4 @@
+/* Mainly for the stupid scroll bar */
+::-webkit-scrollbar {
+    display: none;
+}

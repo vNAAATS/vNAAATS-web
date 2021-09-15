@@ -15,7 +15,7 @@ import type { Aircraft, NatTrack } from "./objects";
 // Json interface
 interface JsonAcObj {
   callsign: string;
-  type?: string;
+  type: string;
   assignedLevel: number;
   assignedMach: number;
   track: string;
@@ -23,9 +23,16 @@ interface JsonAcObj {
   routeEtas: string;
   departure: string;
   arrival: string;
-  direction?: string;
+  direction: boolean;
+  etd: string;
+  selcal: string;
+  datalinkConnected: boolean;
   isEquipped: boolean;
+  state: string;
+  relevant: boolean;
+  targetMode: number;
   trackedBy: string;
+  trackedById: string;
   lastUpdated: string;
 }
 
@@ -43,7 +50,7 @@ export let currentTMI: string = "";
 export let currentNatTracks: Map<string, NatTrack> = new Map();
 export let networkAircraft: Map<string, Map<string, Aircraft>> = new Map();
 export let aircraftCount: number = 0;
-export let sortAscending: boolean = false;
+export let sortDescending: boolean = true;
 // Selected aircraft
 export let asel: Aircraft = null!;
 
@@ -158,7 +165,7 @@ export async function populateAllAircraft() : Promise<void> {
   let res: string = "";
   console.log("Populating aircraft array.");
 
-  await fetch(allAircraftGet + (sortAscending ? "?sort=1" : "?sort=0")).then(
+  await fetch(allAircraftGet + (sortDescending ? "?sort=1" : "?sort=0")).then(
     function (response: Response) {
       response.text().then(function (text: string) {
         // Parse json
@@ -210,19 +217,28 @@ export async function populateAllAircraft() : Promise<void> {
           }
 
           const ac: Aircraft = {
-            Callsign: objArr[i].callsign,
-            AssignedLevel: objArr[i].assignedLevel,
-            AssignedMach: objArr[i].assignedMach,
-            Track: objArr[i].track,
+            Callsign: objArr[i]?.callsign,
+            Type: objArr[i]?.type,
+            AssignedLevel: objArr[i]?.assignedLevel,
+            AssignedMach: objArr[i]?.assignedMach,
+            Track: objArr[i]?.track,
             Route: routePoints,
             RouteEtas: routeEtas,
-            Departure: objArr[i].departure,
-            Arrival: objArr[i].arrival,
-            IsEquipped: objArr[i].isEquipped,
-            TrackedBy: objArr[i].trackedBy,
+            Departure: objArr[i]?.departure,
+            Arrival: objArr[i]?.arrival,
+            Etd: objArr[i]?.etd,
+            Selcal: objArr[i]?.selcal,
+            Datalink: objArr[i]?.datalinkConnected,
+            SectorID: objArr[i]?.trackedById,
+            State: objArr[i]?.state,
+            Relevant: true, // TEMPORARY TODO
+            IsEquipped: objArr[i]?.isEquipped,
+            TrackedBy: objArr[i]?.trackedBy,
+            TargetMode: objArr[i]?.targetMode,
             Direction: dir,
-            LastUpdated: Date.parse(objArr[i].lastUpdated),
+            LastUpdated: Date.parse(objArr[i]?.lastUpdated),
           };
+          
           // Check the track
           if (ac.Track != "RR" && currentNatTracks.has(ac.Track)) {
             networkAircraft.get(ac.Track)?.set(ac.Callsign, ac);

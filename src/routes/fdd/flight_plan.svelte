@@ -1,7 +1,9 @@
 <script lang="ts">
   import * as dataHandler from "../../typescript/fdd/data";
+  import * as utils from "../../typescript/fdd/utils";
   import Titlebar from "../../props/fdd/titlebar.svelte";
   import TextInput from "../../props/fdd/text_input.svelte";
+  import type { Aircraft } from "../../typescript/fdd/objects";
 
   // Externals
   let asel: Aircraft;
@@ -23,7 +25,7 @@
       <TextInput
         label={"ACID"}
         identifier={"acid"}
-        width={"w-28"}
+        width={"w-32"}
         value={asel.Callsign}
         isDisabled={true}
       />
@@ -41,13 +43,7 @@
         value={asel.Departure}
         isDisabled={true}
       />
-      <TextInput
-        label={"Dest"}
-        identifier={"dest"}
-        width={"w-14"}
-        value={asel.Arrival}
-        isDisabled={true}
-      />
+
       <TextInput
         label={"Etd"}
         identifier={"etd"}
@@ -115,8 +111,24 @@
       </div>
     </div>
     <div class="flex flex-row items-top pt-1 px-1 ml-1 justify-start">
-      <div class="flex flex-row items-center overflow-x-scroll mt-2.5 justify-center w-5/6 h-28 bg-blue-9 
-      border-2 border-l-blue-0 border-t-blue-0 border-r-blue-6 border-b-blue-6 bordertext-black font-bitmap text-xl font-thin"/>
+      <div class="flex flex-row items-start overflow-x-scroll mt-2.5  px-1.5 py-0.5 justify-start w-5/6 h-28 bg-blue-9 
+      border-2 border-l-blue-0 border-t-blue-0 border-r-blue-6 border-b-blue-6 text-black font-bitmap text-xl font-thin select-none cursor-default">
+        <div class="flex flex-row">
+          {#each asel.Route as point, i}
+            <div class="flex flex-col pr-6">
+              <div>
+                {!point.includes("/") ? point : utils.coordToArray(point)[1]}
+              </div>
+              <div>
+                {!point.includes("/") ? "\xa0" : utils.coordToArray(point)[0]}
+              </div>
+              <div>
+                {asel.RouteEtas[i] == "--" ? "\xa0\xa0" : asel.RouteEtas[i]}
+              </div>
+            </div>
+          {/each}
+        </div>
+      </div>
       <TextInput
         label={"Tck"}
         identifier={"track"}

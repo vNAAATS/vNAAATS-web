@@ -12,6 +12,7 @@ const config = {
       black: colors.black,
       white: colors.white,
       grey: colors.gray,
+      cyan: colors.cyan,
       green: colors.green,
       yellow: colors.yellow,
       // Custom blue

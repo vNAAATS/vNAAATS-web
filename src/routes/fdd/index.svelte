@@ -3,6 +3,12 @@
   import FlightPlan from "./flight_plan.svelte";
   import Tracks from "./tracks.svelte";
   import NatTrakData from "./nattrak_data.svelte";
+  import { onMount } from "svelte";
+  import * as site from "../../typescript/site"
+
+  onMount(async () => {
+    site.setTitle("Flight Data Display");
+  });
 </script>
 
 <div class="flex h-screen overflow-hidden">

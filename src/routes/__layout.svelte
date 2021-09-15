@@ -18,7 +18,7 @@
 
 <div class="flex flex-col h-screen">
   {#if isHome}
-    <div class="flex flex-col h-screen bg-black" />
+    <div class="overflow-hidden"></div>
   {:else}
     <div class="flex justify-between items-center w-screen h-1/25 bg-blue-0 border-2 border-l-blue-10 border-t-blue-10 border-r-blue-10 border-b-blue-0">
       <div class="flex w-2/5">

@@ -6,6 +6,7 @@
   import FlightStrip from "../../props/fdd/flight_strip.svelte";
   import * as dataHandler from "../../typescript/fdd/data";
   import * as site from "../../typescript/site";
+import { action_destroyer } from "svelte/internal";
 
   // Initialisation of data
   let isLoading: boolean = true;
@@ -16,6 +17,10 @@
 
     // Start the fetcher
     dataHandler.runDataFetcher();
+
+    // Title
+    site.setTitle("Flight Data Display");
+
   });
 
   onDestroy(async () => {
@@ -127,8 +132,10 @@
           </div>
         {/if}
         {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
-          <FlightStrip
+        {#if ac.Relevant}
+          <FlightStrip 
             callsign={ac.Callsign}
+            type={ac.Type}
             assignedLevel={ac.AssignedLevel}
             assignedMach={ac.AssignedMach}
             track={ac.Track}
@@ -136,10 +143,18 @@
             routeEtas={ac.RouteEtas}
             departure={ac.Departure}
             arrival={ac.Arrival}
+            etd={ac.Etd}
+            selcal={ac.Selcal}
+            datalink={ac.Datalink}
             trackedBy={ac.TrackedBy}
+            sectorId={ac.SectorID}
             isEquipped={ac.IsEquipped}
+            state={ac.State}
+            relevant={ac.Relevant}
+            targetMode={ac.TargetMode}
             direction={ac.Direction ?? false}
           />
+          {/if}
         {/each}
       {/each}
     {/if}
