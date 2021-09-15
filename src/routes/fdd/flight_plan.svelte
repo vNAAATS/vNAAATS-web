@@ -1,8 +1,7 @@
 <script lang="ts">
-    import * as dataHandler from "../typescript/data"
-    import Strip from "../props/flight_strip.svelte"
-    import Titlebar from "../props/titlebar.svelte";
-    import TextInput from "../props/text_input.svelte"
+    import * as dataHandler from "../../typescript/fdd/data"
+    import Titlebar from "../../props/fdd/titlebar.svelte";
+    import TextInput from "../../props/fdd/text_input.svelte"
     
     // Externals
     $: asel = dataHandler.asel;

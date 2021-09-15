@@ -1,10 +1,11 @@
 <script lang="ts">
+    
     import { onMount } from "svelte";
-    import * as utils from "../typescript/utils";
-    import Button from "../props/button.svelte";
-    import Checkbox from "../props/checkbox.svelte";
-    import FlightStrip from "../props/flight_strip.svelte"
-    import * as dataHandler from "../typescript/data";
+    import * as utils from "../../typescript/fdd/utils";
+    import Button from "../../props/fdd/button.svelte";
+    import Checkbox from "../../props/fdd/checkbox.svelte";
+    import FlightStrip from "../../props/fdd/flight_strip.svelte"
+    import * as dataHandler from "../../typescript/fdd/data";
 
     // Initialisation of data
     let isLoading: boolean = true;

@@ -1,9 +1,9 @@
 <script lang="ts">
     import { CronJob } from 'cron';
-    import type { NatTrack } from "../typescript/objects"
-    import * as dataHandler from "../typescript/data";
-    import Titlebar from "../props/titlebar.svelte";
-    import TrackStrip from "../props/track_strip.svelte";
+    import type { NatTrack } from "../../typescript/fdd/objects"
+    import * as dataHandler from "../../typescript/fdd/data";
+    import Titlebar from "../../props/fdd/titlebar.svelte";
+    import TrackStrip from "../../props/fdd/track_strip.svelte";
 
     // Get tracks and sort
     let tracksRaw = Array.from(dataHandler.currentNatTracks.keys()).sort();

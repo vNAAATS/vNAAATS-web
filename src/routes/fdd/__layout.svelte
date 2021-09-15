@@ -1,6 +1,6 @@
 <script lang="ts">
-import "../styles/globals.postcss";
-import * as dataHandler from "../typescript/data"
+import "../../styles/globals.postcss";
+import * as dataHandler from "../../typescript/fdd/data"
 
 let count: number = 0;
 

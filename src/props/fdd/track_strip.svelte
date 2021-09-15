@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Waypoint } from "src/typescript/objects";
+    import type { Waypoint } from "../../typescript/fdd/objects";
 
     export let id: string;
     export let route: Waypoint[];

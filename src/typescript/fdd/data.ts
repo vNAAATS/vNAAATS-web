@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import { CronJob } from 'cron';
-import { find } from 'lodash';
 import type { Aircraft, NatTrack, Waypoint, TrackDirection } from './objects';
 
 // Link constants

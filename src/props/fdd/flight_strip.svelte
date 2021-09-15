@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as utils from "../typescript/utils";
-    import * as dataHandler from "../typescript/data"
+    import * as utils from "../../typescript/fdd/utils";
+    import * as dataHandler from "../../typescript/fdd/data"
 
     // Elements for spread prop
     export let callsign: string;

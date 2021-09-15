@@ -1,8 +1,8 @@
 <script lang="ts">
     import { CronJob } from "cron";
-    import * as dataHandler from "../typescript/data"
-    import Titlebar from "../props/titlebar.svelte";
-    import TextInput from "../props/text_input.svelte"
+    import * as dataHandler from "../../typescript/fdd/data"
+    import Titlebar from "../../props/fdd/titlebar.svelte";
+    import TextInput from "../../props/fdd/text_input.svelte"
     
 
 </script>
