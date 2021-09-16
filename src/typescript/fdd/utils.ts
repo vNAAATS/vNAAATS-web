@@ -45,7 +45,10 @@ export function parseTime(dateTime: Date): string {
 export function determineTrackRelevance(arg: string) : boolean {
   let isRelevant: boolean = false;
   // Get the track
-  if (dataHandler.currentNatTracks.get(arg) == null) {
+  if (arg == "RR") {
+    return true;
+  }
+  else if (dataHandler.currentNatTracks.get(arg) == null) {
     return false;
   }
   else {

@@ -12,16 +12,16 @@
   export let routeEtas: string[];
   export let departure: string;
   export let arrival: string;
-  export let etd: string;
-  export let selcal: string;
-  export let datalink: boolean;
+  //export let etd: string;
+  //export let selcal: string;
+  //export let datalink: boolean;
   export let direction: boolean;
   export let isEquipped: boolean;
-  export let state: string;
-  export let relevant: boolean;
+  //export let state: string;
+  //export let relevant: boolean;
   export let trackedBy: string;
-  export let targetMode: number;
-  export let sectorId: string;
+  //export let targetMode: number;
+  //export let sectorId: string;
 
   let colour: string = direction ? "bg-blue-10" : "bg-yellow-100";
   let darkerColour: string = direction ? "bg-blue-9" : "bg-yellow-200";

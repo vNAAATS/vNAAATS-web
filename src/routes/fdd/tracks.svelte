@@ -45,9 +45,11 @@
   <Titlebar label="Tracks - TMI: {tmi}" />
   <div class="overflow-y-scroll h-full">
     <div class="flex" />
+    {#if westbound.length > 0}
     <div class="flex flex-row justify-center w-full bg-grey-500 bg-opacity-70 select-none hover:cursor-default">
       Westbound
     </div>
+    {/if}
     {#each westbound as track}
       <TrackStrip
         id={track.Identifier}
@@ -58,9 +60,11 @@
         validTo={track.ValidTo}
       />
     {/each}
+    {#if eastbound.length > 0}
     <div class="flex flex-row justify-center w-full bg-grey-500 bg-opacity-70 select-none hover:cursor-default">
       Eastbound
     </div>
+    {/if}
     {#each eastbound as track}
       <TrackStrip
         id={track.Identifier}
