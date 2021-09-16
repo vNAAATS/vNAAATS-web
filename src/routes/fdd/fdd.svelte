@@ -7,6 +7,7 @@
   import * as dataHandler from "../../typescript/fdd/data";
   import * as site from "../../typescript/site";
 import { action_destroyer } from "svelte/internal";
+import { now } from "lodash";
 
   // Initialisation of data
   let isLoading: boolean = true;
@@ -26,6 +27,8 @@ import { action_destroyer } from "svelte/internal";
   onDestroy(async () => {
     // Hello homepage
     site.setHome(true);
+    clearInterval(dataHandler.acUpdateJob);
+    clearInterval(dataHandler.tkUpdateJob);
   });
 
   // Externals
@@ -112,7 +115,7 @@ import { action_destroyer } from "svelte/internal";
       </div>
     {:else}
       {#each acListKeys as acTrack}
-        {#if dataHandler.networkAircraft.get(acTrack)?.size != 0}
+        {#if dataHandler.networkAircraft.get(acTrack)?.size != 0 && utils.determineTrackRelevance(acTrack)}
           <div class="flex flex-row justify-start w-full bg-grey-500 bg-opacity-70 select-none hover:cursor-default">
             <div class="w-1/2 px-3">
               {acTrack != "RR" ? acTrack : "RANDOM"}
@@ -132,7 +135,7 @@ import { action_destroyer } from "svelte/internal";
           </div>
         {/if}
         {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
-        {#if ac.Relevant}
+        {#if ac.Relevant && new Date().getUTCMinutes() - new Date(ac.LastUpdated).getUTCMinutes() < 5}
           <FlightStrip 
             callsign={ac.Callsign}
             type={ac.Type}

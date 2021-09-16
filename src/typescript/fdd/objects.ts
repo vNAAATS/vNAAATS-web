@@ -25,6 +25,18 @@ export type Aircraft = {
   LastUpdated: number;
 };
 
+export type NatTrakData = {
+  callsign: string;
+  status: string;
+  nat: string;
+  fix: string;
+  level: number;
+  mach: number;
+  estimating_time: string;
+  clearance_issued: string;
+  extra_info: string;
+}
+
 export type Waypoint = {
   name: string;
   latitude: number;

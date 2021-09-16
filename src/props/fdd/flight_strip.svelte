@@ -91,7 +91,7 @@
       {/each}
     </div>
     <div class="flex flex-row justify-end w-1/5 hover:cursor-default select-none">
-      <div class="w-1/3">B789</div>
+      <div class="w-1/3">{type}</div>
       <div class="w-3/7">
         {trackedBy != "" ? trackedBy : "\xa0"}
       </div>

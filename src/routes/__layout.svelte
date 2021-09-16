@@ -28,17 +28,23 @@ import { onMount } from "svelte";
           {config.version}
         </button>
         <div class="px-1/2 select-none hover:cursor-default">|</div>
-        <div class="px-3 select-none hover:cursor-default">
+        <div class="px-5 select-none hover:cursor-default">
           Aircraft Count: {count}
         </div>
       </div>
       <div class="flex flex-row-reverse px-3 w-1/5 select-none hover:cursor-default">
-        <div class="px-3 select-none hover:cursor-default">
+        <div class="px-5 select-none hover:cursor-default">
           vNAAATS Flight Data Display
         </div>
       </div>
       <div class="flex flex-row-reverse w-2/5 select-none hover:cursor-default">
-        <div class="px-3">Guest User</div>
+        <a href="./">
+          <button  class="px-5 font-black hover:text-grey-300 select-none">
+            Homepage
+          </button>
+        </a>
+        
+        <!--<div class="px-3">Guest User</div>
         <div class="px-1/2 select-none hover:cursor-default">|</div>
         <button class="px-3 font-black hover:text-grey-300 select-none hover:cursor-default">
           Settings
@@ -46,7 +52,7 @@ import { onMount } from "svelte";
         <div class="px-1/2 select-none hover:cursor-default">•</div>
         <button class="px-3 font-black hover:text-grey-300 select-none hover:cursor-default">
           Manual Data Entry
-        </button>
+        </button>-->
       </div>
     </div>
   {/if}

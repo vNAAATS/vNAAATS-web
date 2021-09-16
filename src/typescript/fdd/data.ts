@@ -7,7 +7,7 @@
  *  Imports
  */
 import { CronJob } from "cron";
-import type { Aircraft, NatTrack } from "./objects";
+import type { Aircraft, NatTrack, NatTrakData } from "./objects";
 
 /*
  *  Definitions
@@ -44,15 +44,23 @@ const natTracksApi: string = "https://tracks.ganderoceanic.ca/data";
 //const singleAircraftGet: string = "https://vnaaats-net.ganderoceanic.ca/api/FlightDataSingleGet?callsign=";
 const allAircraftGet: string =
   "https://vnaaats-net.ganderoceanic.ca/api/FlightDataAllGet";
+const allNatTrakGet: string = "https://nattrak.vatsim.net/pluginapi.php";
+const corsProxy: string = "https://floating-crag-56199.herokuapp.com/"
+
 // Data lists
 export let trackError: boolean = false;
 export let currentTMI: string = "";
 export let currentNatTracks: Map<string, NatTrack> = new Map();
 export let networkAircraft: Map<string, Map<string, Aircraft>> = new Map();
+export let natTrakData: Map<string, NatTrakData> = new Map();
 export let aircraftCount: number = 0;
 export let sortDescending: boolean = true;
 // Selected aircraft
 export let asel: Aircraft = null!;
+
+// Crons
+export let acUpdateJob;
+export let tkUpdateJob;
 
 /*
  *  Functions
@@ -99,7 +107,6 @@ export function setAsel(callsign: string): void {
 export async function parseNatTracks(): Promise<void> {
   // Dynamic data variable
   let res: string = "";
-  console.log("Downloading Track Data.");
 
   // Get the data
   await fetch(natTracksApi).then(function (response: Response) {
@@ -119,7 +126,6 @@ export async function parseNatTracks(): Promise<void> {
           currentTMI !== objArr?.[0]?.tmi
             ? (isUpdateReqd = true)
             : (isUpdateReqd = false);
-          console.log("Tracks not downloaded: Already to date.");
         } else {
           // First run so request update
           isUpdateReqd = true;
@@ -163,7 +169,6 @@ export async function parseNatTracks(): Promise<void> {
 export async function populateAllAircraft() : Promise<void> {
   // Dynamic data variable
   let res: string = "";
-  console.log("Populating aircraft array.");
 
   await fetch(allAircraftGet + (sortDescending ? "?sort=1" : "?sort=0")).then(
     function (response: Response) {
@@ -231,14 +236,13 @@ export async function populateAllAircraft() : Promise<void> {
             Datalink: objArr[i]?.datalinkConnected,
             SectorID: objArr[i]?.trackedById,
             State: objArr[i]?.state,
-            Relevant: true, // TEMPORARY TODO
+            Relevant: objArr[i]?.relevant ?? false, // TEMPORARY TODO
             IsEquipped: objArr[i]?.isEquipped,
             TrackedBy: objArr[i]?.trackedBy,
             TargetMode: objArr[i]?.targetMode,
             Direction: dir,
             LastUpdated: Date.parse(objArr[i]?.lastUpdated),
           };
-          
           // Check the track
           if (ac.Track != "RR" && currentNatTracks.has(ac.Track)) {
             networkAircraft.get(ac.Track)?.set(ac.Callsign, ac);
@@ -252,26 +256,46 @@ export async function populateAllAircraft() : Promise<void> {
   return;
 }
 
+export async function natTrakFetch() : Promise<void> {
+  let res: string = "";
+  
+  
+
+  // Get the data
+  await fetch(corsProxy + allNatTrakGet).then(function (response: Response) {
+    response.text().then(function (text: string) {
+        // Parse json
+        res = text;
+        const objArr: NatTrakData[] = JSON.parse(res);
+
+        // Reset the list
+        natTrakData = new Map();
+        // Loop and assign
+        for(let i: number = 0; i < objArr.length; i++) {
+          objArr[i].mach = objArr[i].mach * 100;
+          natTrakData.set(objArr[i].callsign, objArr[i]);
+        }
+    })
+  });
+}
+
 export function runDataFetcher() : void {
-  console.log("Cron starting...");
+  console.log("Crons starting...");
 
   // First population
   parseNatTracks();
   populateAllAircraft();
-
-  /* NB: We need to do the cron with each increment of 5 otherwise the methods run several times */
-  // Aircraft cron (run every 5 seconds)
-  setInterval(() => {
+  natTrakFetch();
+  
+  // Aircraft & natTrak cron (run every 5 seconds)
+  acUpdateJob = setInterval(() => {
     populateAllAircraft();
+    natTrakFetch();
   }, 5000);
 
+  /* NB: We need to do the cron with each increment of 5 otherwise the methods run several times */
   // Tracks cron (run every 5 seconds)
-  const tkJob: CronJob = new CronJob(
-    "0 0,5,10,15,20,25,30,35,40,45,50,55 * * * *",
-    parseNatTracks,
-    null,
-    true
-  );
-
-  tkJob.start();
+  tkUpdateJob = setInterval(() => {
+    parseNatTracks();
+  }, 300000);
 }

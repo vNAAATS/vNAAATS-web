@@ -4,6 +4,7 @@
   import Titlebar from "../../props/fdd/titlebar.svelte";
   import TextInput from "../../props/fdd/text_input.svelte";
   import type { Aircraft } from "../../typescript/fdd/objects";
+import { toString } from "lodash";
 
   // Externals
   let asel: Aircraft;
@@ -33,7 +34,7 @@
         label={"Type"}
         identifier={"type"}
         width={"w-16"}
-        value={"B787"}
+        value={asel.Type}
         isDisabled={true}
       />
       <TextInput
@@ -48,23 +49,23 @@
         label={"Etd"}
         identifier={"etd"}
         width={"w-16"}
-        value={"1234z"}
+        value={asel.Etd.toString() + "z"}
         isDisabled={true}
       />
       <TextInput
         label={"SELCAL"}
         identifier={"selcal"}
         width={"w-16"}
-        value={"ABCD"}
+        value={asel.Selcal == "" ? "----" : asel.Selcal}
         isDisabled={true}
       />
       <TextInput
         label={"Datalink"}
         identifier={"datalink"}
-        width={"w-28"}
-        value={"Connected."}
+        width={"w-32"}
+        value={dataHandler.natTrakData.get(asel.Callsign) != null ? "Connected" : "Disconnected"}
         inputForeColour={"text-black"}
-        backColour={"bg-green-400"}
+        backColour={dataHandler.natTrakData.get(asel.Callsign) != null ? "bg-green-400" : "bg-red-500"}
         isDisabled={true}
       />
       <!-- TODO: Change datalink colour if not connected -->
@@ -72,7 +73,7 @@
         label={"Sector"}
         identifier={"sector"}
         width={"w-10"}
-        value={"34"}
+        value={asel.SectorID == "" ? "--" : asel.SectorID}
         isDisabled={true}
       />
     </div>
