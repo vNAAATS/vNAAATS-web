@@ -4,7 +4,6 @@
   import Titlebar from "../../props/fdd/titlebar.svelte";
   import TextInput from "../../props/fdd/text_input.svelte";
   import type { Aircraft } from "../../typescript/fdd/objects";
-import { toString } from "lodash";
 
   // Externals
   let asel: Aircraft;

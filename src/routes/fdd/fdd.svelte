@@ -5,9 +5,6 @@
   import Checkbox from "../../props/fdd/checkbox.svelte";
   import FlightStrip from "../../props/fdd/flight_strip.svelte";
   import * as dataHandler from "../../typescript/fdd/data";
-  import * as site from "../../typescript/site";
-import { action_destroyer } from "svelte/internal";
-import { now } from "lodash";
 
   // Initialisation of data
   let isLoading: boolean = true;

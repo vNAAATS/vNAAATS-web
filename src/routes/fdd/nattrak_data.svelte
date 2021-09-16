@@ -3,7 +3,6 @@
   import Titlebar from "../../props/fdd/titlebar.svelte";
   import TextInput from "../../props/fdd/text_input.svelte";
   import type { Aircraft, NatTrakData } from "../../typescript/fdd/objects";
-import { isEmpty, isNull, toString } from "lodash";
 
   // Externals
   let asel: Aircraft;
@@ -15,7 +14,7 @@ import { isEmpty, isNull, toString } from "lodash";
   // Component updater (50ms)
   setInterval(() => {
     asel = dataHandler.asel;
-    if (!isNull(asel) && asel.Callsign.length > 0)
+    if (asel == null && asel.Callsign.length > 0)
       natTrakData = dataHandler.natTrakData.get(asel.Callsign) ?? {callsign: "",status: "--",  nat: "--", fix: "--", level: -1,
   mach: -1, estimating_time: "--", clearance_issued: "--", extra_info: "--"};
   }, 50);
