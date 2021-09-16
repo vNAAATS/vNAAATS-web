@@ -133,7 +133,7 @@
           </div>
         {/if}
         {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
-        {#if ac.Relevant && new Date().getUTCMinutes() - new Date(ac.LastUpdated).getUTCMinutes() < 5}
+        {#if ac.Relevant }
           <FlightStrip 
             callsign={ac.Callsign}
             type={ac.Type}
