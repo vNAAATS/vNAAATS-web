@@ -14,14 +14,14 @@
   // Component updater (50ms)
   setInterval(() => {
     asel = dataHandler.asel;
-    if (asel == null && asel.Callsign.length > 0)
-      natTrakData = dataHandler.natTrakData.get(asel.Callsign) ?? {callsign: "",status: "--",  nat: "--", fix: "--", level: -1,
+    if (asel == null && dataHandler.asel.Callsign.length > 0)
+      natTrakData = dataHandler.natTrakData.get(dataHandler.asel.Callsign) ?? {callsign: "",status: "--",  nat: "--", fix: "--", level: -1,
   mach: -1, estimating_time: "--", clearance_issued: "--", extra_info: "--"};
   }, 50);
 </script>
 
 <div class="flex flex-col w-full h-8/27 border-2 border-l-blue-0 border-t-blue-0 border-r-blue-10 border-b-blue-10">
-  <Titlebar label="natTrak Information - {asel == null ? 'No selection' : asel.Callsign}"/>
+  <Titlebar label="natTrak Information - {asel == null ? 'No selection' : dataHandler.asel.Callsign}"/>
   <div class="px-2 pt-3 pb-3 text-xl font-bitmap tracking-widest font-black">
     Clearance Data
   </div>
