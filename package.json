@@ -34,6 +34,7 @@
     "cron": "^1.8.2",
     "cross-env": "^7.0.3",
     "lodash": "^4.17.21",
+    "material-icons": "^1.2.2",
     "node-cron": "^3.0.0",
     "node-schedule": "^2.0.0",
     "postcss-cli": "^8.3.1",

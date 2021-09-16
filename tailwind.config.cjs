@@ -15,6 +15,7 @@ const config = {
       cyan: colors.cyan,
       green: colors.green,
       yellow: colors.yellow,
+      red: colors.red,
       // Custom blue
       blue: {
         0: "#0C1827",
@@ -34,13 +35,30 @@ const config = {
     fontFamily: {
       regular: ["Verdana, sans-serif"],
       mono: ["Courier, mono"],
-      bitmap: ["Expo"],
+      bitmap: ["ATC", "sans-serif"],
+      web: ["Open Sans, sans-serif"]
+    },
+    boxShadow: {
+      '5xl': '0 35px 60px -15px rgba(0, 0, 0, 0.5)',
+    },
+    scale: {
+      '70': '0.7',
+      '80': '0.8',
+      '110': '1.1'
     },
     extend: {
       height: {
         "1/10": "10%",
         "1/14": "7.14%",
         "1/25": "4%",
+        "1/7": "14.2857143%",
+        "2/7": "28.5714286%",
+        "3/7": "42.8571429%",
+        "4/7": "57.1428571%",
+        "5/7": "71.4285714%",
+        "6/7": "85.7142857%",
+        "8/27": "29.6296296296%",
+        "10/27": "37.037037037%"
       },
       width: {
         "1/7": "14.2857143%",
@@ -56,6 +74,7 @@ const config = {
         "1/9": "11.1111111111%",
         "1/14": "7.14285714286%",
         "1/11": "9.72%",
+        "3/14": "23.5%",
         0.48: "47.7%", // This is to align the track header with the list items
         0.32: "32.5%",
         0.68: "68.8%",

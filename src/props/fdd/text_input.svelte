@@ -13,11 +13,7 @@
   export let inputForeColour: string = "text-white";
 </script>
 
-<div
-  class="flex flex-{labelOnTop ? 'col' : 'row'} justify-content-end {!labelOnTop
-    ? 'items-center'
-    : ''} font-bitmap font-thin px-2 {widthWhole}"
->
+<div class="flex flex-{labelOnTop ? 'col' : 'row'} justify-content-end {!labelOnTop ? 'items-center' : ''} {isDisabled ? "select-none" : ""} font-bitmap font-thin px-2 {widthWhole}">
   <label
     for={identifier}
     class="font-regular font-bold text-sm {!labelOnTop ? 'px-2' : ''}"
@@ -31,6 +27,5 @@
     {value}
     id={identifier}
     maxlength={charWidth}
-    disabled={isDisabled}
-  />
+    disabled={isDisabled}/>
 </div>

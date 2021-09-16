@@ -3,6 +3,7 @@
   import * as dataHandler from "../typescript/fdd/data";
   import config from "../config.json";
   import * as site from "../typescript/site";
+import { onMount } from "svelte";
 
   // Externals
   let count: number = 0;

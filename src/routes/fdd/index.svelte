@@ -8,6 +8,14 @@
 
   onMount(async () => {
     site.setTitle("Flight Data Display");
+    document.body.style.opacity = "0%";
+
+    // Called 300ms after mount
+    setTimeout(() => {
+        // Do this to hide the messy content organisation that happens at first load
+        document.body.style.animation = "0.5s linear 0s fadein";
+        document.body.style.opacity = "100%";
+	  },300);
   });
 </script>
 

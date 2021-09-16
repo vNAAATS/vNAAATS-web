@@ -43,6 +43,41 @@
   display: none;
 }
 
+@keyframes fadein {
+  0% {
+      opacity: 0%;
+      filter: brightness(1)
+  }
+  100% {
+      opacity: 100%;
+      filter: brightness(1)
+  }
+}
+
+@keyframes translateFromLeft {
+    from {
+        transform: translateX(-200%);
+        opacity: 100;
+        will-change: transform;
+    }
+    to {
+        left: 50%;
+        opacity:100;
+    }
+}
+
+@keyframes translateFromRight {
+  from {
+      transform: translateX(200%);
+      opacity: 100;
+      will-change: transform;
+  }
+  to {
+      left: 50%;
+      opacity:100;
+  }
+}
+
 /* Up */
 ::-webkit-scrollbar-button:vertical:decrement {
   border-width: 0 7px 14px 7px;
