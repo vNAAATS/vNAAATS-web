@@ -82,7 +82,7 @@ onMount(async () => {
             </div>
         </div>
         <div class="flex flex-row justify-evenly w-full py-4 font-web font-bold">
-            <a href="" class="flex flex-row items-center justify-center w-1/3 select-none">
+            <a href="/" class="flex flex-row items-center justify-center w-1/3 select-none">
                 <div class="flex flex-col scale-100 justify-center w-5/7 items-center 2xl:text-3xl xl:text-2xl shadow-5xl p-6 bg-blue-1 border-2 border-blue-1 rounded select-none
                 transition duration-500 hover:scale-105">
                     Oceanic Euroscope Plugin
@@ -111,7 +111,7 @@ onMount(async () => {
                     </svg>
                 </div>
             </a>
-            <a href="" class="flex flex-row justify-center items-center w-1/3">
+            <a href="/" class="flex flex-row justify-center items-center w-1/3">
                 <div class="flex flex-col justify-center w-5/7 items-center 2xl:text-3xl xl:text-2xl shadow-5xl p-6 bg-blue-1 border-2 border-blue-1 rounded select-none">
                     Dedicated Network & API
                     <!-- MD Nework icon -->
