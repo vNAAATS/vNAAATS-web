@@ -14,7 +14,7 @@
   // Component updater (50ms)
   setInterval(() => {
     asel = dataHandler.asel;
-    if (asel == null && dataHandler.asel.Callsign.length > 0)
+    if (asel != null && dataHandler.asel.Callsign.length > 0)
       natTrakData = dataHandler.natTrakData.get(dataHandler.asel.Callsign) ?? {callsign: "",status: "--",  nat: "--", fix: "--", level: -1,
   mach: -1, estimating_time: "--", clearance_issued: "--", extra_info: "--"};
   }, 50);
