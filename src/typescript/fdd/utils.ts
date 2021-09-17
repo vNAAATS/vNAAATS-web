@@ -54,7 +54,7 @@ export function determineTrackRelevance(arg: string) : boolean {
   else {
     let tk: Map<string, Aircraft> = dataHandler.networkAircraft.get(arg)!;
     tk.forEach((value, key) => {
-      if(value.Relevant && new Date().getUTCMinutes() - new Date(value.LastUpdated).getUTCMinutes() < 5) {
+      if(value.Relevant && new Date().getUTCMinutes() - new Date(value.LastUpdated).getUTCMinutes() < 30) {
         isRelevant = true;
         return;
       }

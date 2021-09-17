@@ -12,7 +12,7 @@ import { onMount } from "svelte";
   // DOM updater
   // Component updater (50ms)
   setInterval(() => {
-    count = dataHandler.aircraftCount;
+    count = dataHandler.relevantAircraftCount;
     isHome = site.isHomePage;
   }, 50);
 </script>

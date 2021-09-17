@@ -66,7 +66,7 @@
         <Button label="Default" />
       </div>
       <div class="px-0.5 hover:cursor-default">
-        <div class="flex items-center justify-between min-w-5 px-1 border-2 ml-3 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+        <div class="flex items-center justify-between min-w-5 2xl:h-9 xl:h-8 px-1 border-2 ml-3 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
           <Checkbox identifier={"1"} label={"PST"} />
           <Checkbox identifier={"1"} label={"FaD"} />
           <Checkbox identifier={"1"} label={"WST"} />

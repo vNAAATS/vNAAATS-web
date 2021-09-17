@@ -117,10 +117,10 @@
           {#each asel.Route as point, i}
             <div class="flex flex-col pr-6">
               <div>
-                {!point.includes("/") ? point : utils.coordToArray(point)[1]}
+                {!point.includes("/") ? point : utils.coordToArray(point)[0]}
               </div>
               <div>
-                {!point.includes("/") ? "\xa0" : utils.coordToArray(point)[0]}
+                {!point.includes("/") ? "\xa0" : utils.coordToArray(point)[1]}
               </div>
               <div>
                 {asel.RouteEtas[i] == "--" ? "\xa0\xa0" : asel.RouteEtas[i]}

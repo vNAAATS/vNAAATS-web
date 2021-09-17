@@ -54,6 +54,7 @@ export let currentNatTracks: Map<string, NatTrack> = new Map();
 export let networkAircraft: Map<string, Map<string, Aircraft>> = new Map();
 export let natTrakData: Map<string, NatTrakData> = new Map();
 export let aircraftCount: number = 0;
+export let relevantAircraftCount: number = 0;
 export let sortDescending: boolean = true;
 // Selected aircraft
 export let asel: Aircraft = null!;
@@ -153,6 +154,11 @@ export async function parseNatTracks(): Promise<void> {
           ValidFrom: parseInt(objArr[i].validFrom),
           ValidTo: parseInt(objArr[i].validTo),
         };
+
+        if (!track.Direction)
+          track.Route = track.Route.reverse();
+
+        console.log(track.Identifier)
         currentNatTracks.set(track.Identifier, track);
       }
 
@@ -200,12 +206,14 @@ export async function populateAllAircraft() : Promise<void> {
 
         // Set counter
         aircraftCount = objArr.length;
+        relevantAircraftCount = 0;
+
 
         for (let i: number = 0; i < aircraftCount; i++) {
           // Parse route
           const routePoints: string[] = objArr[i].route.split(" ");
           const routeEtas: string[] = objArr[i].routeEtas.split(" ");
-
+          
           // Get direction
           let dir: boolean;
           if (objArr[i].track == "RR" && currentNatTracks.get(objArr[i].track) == null) {
@@ -241,6 +249,9 @@ export async function populateAllAircraft() : Promise<void> {
             networkAircraft.get("RR")?.set(ac.Callsign, ac);
           }
 
+          if (ac.Relevant) {
+            relevantAircraftCount++;
+          }
           // Reverse route if needed
           if (!ac.Direction) {
             ac.Route = ac.Route.reverse();
