@@ -12,7 +12,6 @@
   export let routeEtas: string[];
   export let departure: string;
   export let arrival: string;
-  //export let etd: string;
   //export let selcal: string;
   //export let datalink: boolean;
   export let direction: boolean;

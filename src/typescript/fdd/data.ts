@@ -208,16 +208,7 @@ export async function populateAllAircraft() : Promise<void> {
 
           // Get direction
           let dir: boolean;
-          if (
-            objArr[i].track != "RR" &&
-            currentNatTracks.get(objArr[i].track) != null
-          ) {
-            dir =
-              currentNatTracks.get(objArr[i].track)?.Direction == 1
-                ? true
-                : false;
-          } else {
-            dir = true;
+          if (objArr[i].track == "RR" && currentNatTracks.get(objArr[i].track) == null) {
             objArr[i].track = "RR";
           }
 
@@ -240,7 +231,7 @@ export async function populateAllAircraft() : Promise<void> {
             IsEquipped: objArr[i]?.isEquipped,
             TrackedBy: objArr[i]?.trackedBy,
             TargetMode: objArr[i]?.targetMode,
-            Direction: dir,
+            Direction: objArr[i]?.direction,
             LastUpdated: Date.parse(objArr[i]?.lastUpdated),
           };
           // Check the track
@@ -248,6 +239,12 @@ export async function populateAllAircraft() : Promise<void> {
             networkAircraft.get(ac.Track)?.set(ac.Callsign, ac);
           } else {
             networkAircraft.get("RR")?.set(ac.Callsign, ac);
+          }
+
+          // Reverse route if needed
+          if (!ac.Direction) {
+            ac.Route = ac.Route.reverse();
+            ac.RouteEtas = ac.RouteEtas.reverse();
           }
         }
       });

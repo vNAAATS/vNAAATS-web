@@ -24,7 +24,7 @@ onMount(async () => {
 </script>
 
 <div class="h-screen scrollbar-none overflow-x-hidden" id="topDiv">
-    <div class="flex flex-col items-center justify-center brightness-100 h-full backdrop-filter" style="background-image: url(/banner.jpg); overflow-hidden;">
+    <div class="flex flex-col items-center justify-center h-full backdrop-filter" style="background-image: url(/banner.jpg); overflow-hidden;">
         <div class="flex flex-col items-center justify-center h-1/3">
         </div>
         <div class="flex flex-col items-center justify-start h-1/3">
@@ -82,7 +82,7 @@ onMount(async () => {
             </div>
         </div>
         <div class="flex flex-row justify-evenly w-full py-4 font-web font-bold">
-            <a href="/" class="flex flex-row items-center justify-center w-1/3 select-none">
+            <a href="https://gng.aero-nav.com/EXCXO/files_releases" class="flex flex-row items-center justify-center w-1/3 select-none">
                 <div class="flex flex-col scale-100 justify-center w-5/7 items-center 2xl:text-3xl xl:text-2xl shadow-5xl p-6 bg-blue-1 border-2 border-blue-1 rounded select-none
                 transition duration-500 hover:scale-105">
                     Oceanic Euroscope Plugin

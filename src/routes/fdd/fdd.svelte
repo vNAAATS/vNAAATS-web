@@ -60,13 +60,13 @@
 
 <!-- The main flight data panel with flight strips -->
 <div class="flex flex-col w-full border-b-2 border-r-2 border-blue-10">
-  <div class="flex flex-row justify-around w-full h-1/14 border-blue-10 border-b-2 text-white p-5 font-regular font-light">
-    <div class="flex flex-row items-center justify-start">
-      <div class="px-3 hover:cursor-default">
+  <div class="flex flex-row justify-around w-full h-1/14 border-blue-10 border-b-2 text-white py-5 font-regular font-light">
+    <div class="flex flex-row items-center justify-start 2xl:scale-100 xl:scale-85">
+      <div class="hover:cursor-default">
         <Button label="Default" />
       </div>
       <div class="px-0.5 hover:cursor-default">
-        <div class="flex items-center justify-between min-w-5 h-9 px-3 border-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
+        <div class="flex items-center justify-between min-w-5 px-1 border-2 ml-3 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
           <Checkbox identifier={"1"} label={"PST"} />
           <Checkbox identifier={"1"} label={"FaD"} />
           <Checkbox identifier={"1"} label={"WST"} />
@@ -74,7 +74,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row items-center justify-end w-1/5">
+    <div class="flex flex-row items-center justify-end 2xl:w-1/5 xl:w-1/6 2xl:scale-100 xl:scale-85 xl:ml-5">
       <div class="flex-row px-3">
         <div class="select-none flex items-center h-10 px-3 text-2xl border-2 hover:cursor-default bg-blue-2 border-r-blue-8 border-b-blue-8 border-l-blue-0 border-t-blue-0">
           {timeString}
@@ -86,11 +86,11 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row-reverse items-center">
+    <div class="flex flex-row-reverse items-center 2xl:scale-100 xl:scale-85">
       <div class="px-3 hover:cursor-default">
         <Button label="Default" />
       </div>
-      <div class="px-3 font-bitmap font-thin text-xl hover:cursor-default">
+      <div class="pr-1.5 font-bitmap font-thin 2xl:text-xl xl:text-base hover:cursor-default">
         <Button
           label={"HL • LL • ALL TK • RR"}
           font={"bitmap"}
@@ -133,7 +133,7 @@
           </div>
         {/if}
         {#each Array.from(dataHandler.networkAircraft.get(acTrack).values()) as ac}
-        {#if ac.Relevant && new Date().getUTCMinutes() - new Date(ac.LastUpdated).getUTCMinutes() < 5}
+        {#if ac.Relevant && new Date().getUTCMinutes() - new Date(ac.LastUpdated).getUTCMinutes() < 30}
           <FlightStrip 
             callsign={ac.Callsign}
             type={ac.Type}
@@ -144,15 +144,8 @@
             routeEtas={ac.RouteEtas}
             departure={ac.Departure}
             arrival={ac.Arrival}
-            etd={ac.Etd}
-            selcal={ac.Selcal}
-            datalink={ac.Datalink}
             trackedBy={ac.TrackedBy}
-            sectorId={ac.SectorID}
             isEquipped={ac.IsEquipped}
-            state={ac.State}
-            relevant={ac.Relevant}
-            targetMode={ac.TargetMode}
             direction={ac.Direction ?? false}
           />
           {/if}

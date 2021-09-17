@@ -32,7 +32,7 @@ import { onMount } from "svelte";
           Aircraft Count: {count}
         </div>
       </div>
-      <div class="flex flex-row-reverse px-3 w-1/5 select-none hover:cursor-default">
+      <div class="flex flex-row-reverse px-3 2xl:w-1/5 xl:w-1/4 select-none hover:cursor-default">
         <div class="px-5 select-none hover:cursor-default">
           vNAAATS Flight Data Display
         </div>
