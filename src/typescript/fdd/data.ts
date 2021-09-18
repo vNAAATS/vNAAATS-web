@@ -45,6 +45,7 @@ const natTracksApi: string = "https://tracks.ganderoceanic.ca/data";
 const allAircraftGet: string =
   "https://vnaaats-net.ganderoceanic.ca/api/FlightDataAllGet";
 const allNatTrakGet: string = "https://nattrak.vatsim.net/pluginapi.php";
+const vatsimStatusData: string = "https://data.vatsim.net/v3/vatsim-data.json";
 const corsProxy: string = "https://floating-crag-56199.herokuapp.com/"
 
 // Data lists
@@ -53,6 +54,7 @@ export let currentTMI: string = "";
 export let currentNatTracks: Map<string, NatTrack> = new Map();
 export let networkAircraft: Map<string, Map<string, Aircraft>> = new Map();
 export let natTrakData: Map<string, NatTrakData> = new Map();
+export let onlineControllers: string[];
 export let aircraftCount: number = 0;
 export let relevantAircraftCount: number = 0;
 export let sortDescending: boolean = true;
@@ -214,9 +216,8 @@ export async function populateAllAircraft() : Promise<void> {
           const routePoints: string[] = objArr[i].route.split(" ");
           const routeEtas: string[] = objArr[i].routeEtas.split(" ");
           
-          // Get direction
-          let dir: boolean;
-          if (objArr[i].track == "RR" && currentNatTracks.get(objArr[i].track) == null) {
+          // Handle for when tracks become outdated
+          if (currentNatTracks.get(objArr[i].track) == null) {
             objArr[i].track = "RR";
           }
 
@@ -266,8 +267,6 @@ export async function populateAllAircraft() : Promise<void> {
 
 export async function natTrakFetch() : Promise<void> {
   let res: string = "";
-  
-  
 
   // Get the data
   await fetch(corsProxy + allNatTrakGet).then(function (response: Response) {
@@ -275,6 +274,27 @@ export async function natTrakFetch() : Promise<void> {
         // Parse json
         res = text;
         const objArr: NatTrakData[] = JSON.parse(res);
+
+        // Reset the list
+        natTrakData = new Map();
+        // Loop and assign
+        for(let i: number = 0; i < objArr.length; i++) {
+          objArr[i].mach = objArr[i].mach * 100;
+          natTrakData.set(objArr[i].callsign, objArr[i]);
+        }
+    })
+  });
+}
+
+export async function parseOnlineControllers() : Promise<void> {
+  let res: string = "";
+
+  // Get the data
+  await fetch(corsProxy + vatsimStatusData).then(function (response: Response) {
+    response.text().then(function (text: string) {
+        // Parse json
+        res = text;
+        const objArr: any[] = JSON.parse(res);
 
         // Reset the list
         natTrakData = new Map();
