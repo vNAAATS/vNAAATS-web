@@ -6,6 +6,7 @@
   export let bold: string = "true";
   export let textColour: string = "white";
   export let margin: string = "1";
+  export let isDisabled: boolean = false;
 
   let isBold: boolean = bold === "true" ? true : false;
   let checked: boolean = startChecked === "true" ? true : false;
@@ -17,9 +18,8 @@
     bind:checked
     class="select-none hover:cursor-default custom-check appearance-none outline-none h-3.5 w-3.5 border-2 
     border-l-blue-6 border-t-blue-6 border-r-blue-0 border-b-blue-0 bg-blue-3 checked:bg-blue-1
-    checked:border-r-blue-6 checked:border-b-blue-6  checked:border-l-blue-0 checked:border-t-blue-0"
-    id={identifier}
-  />
+    checked:border-r-blue-6 checked:border-b-blue-6  checked:border-l-blue-0 checked:border-t-blue-0 {isDisabled ? "opacity-75" : ""}"
+    id={identifier} disabled={isDisabled} />
   {#if checked}
     <label
       for={identifier}
@@ -31,7 +31,7 @@
     for={identifier}
     class="text-{textColour} font-{font} {isBold
       ? 'font-bold'
-      : ''} select-none hover:cursor-default px-1.5 pointer-events-none"
+      : ''} {isDisabled ? "opacity-75" : ""} select-none hover:cursor-default px-1.5 pointer-events-none"
     >{label}</label
   >
 </div>
