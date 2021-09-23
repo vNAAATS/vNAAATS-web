@@ -40,10 +40,10 @@ interface JsonAcObj {
  *  Properties
  */
 // Link constants
-const natTracksApi: string = "https://tracks.ganderoceanic.ca/data";
-//const singleAircraftGet: string = "https://vnaaats-net.ganderoceanic.ca/api/FlightDataSingleGet?callsign=";
+const natTracksApi: string = "https://api.vnaaats.net/GetAllNatTracks";
+//const singleAircraftGet: string = "https://api.vnaaats.net/GetSingleFlightData?callsign=";
 const allAircraftGet: string =
-  "https://vnaaats-net.ganderoceanic.ca/api/FlightDataAllGet";
+  "https://api.vnaaats.net/GetAllFlightData";
 const allNatTrakGet: string = "https://nattrak.vatsim.net/pluginapi.php";
 const vatsimStatusData: string = "https://data.vatsim.net/v3/vatsim-data.json";
 const corsProxy: string = "https://floating-crag-56199.herokuapp.com/"
