@@ -16,6 +16,7 @@ const config = {
       green: colors.green,
       yellow: colors.yellow,
       red: colors.red,
+      discord_purple:  "#5865f2",
       // Custom blue
       blue: {
         0: "#0C1827",

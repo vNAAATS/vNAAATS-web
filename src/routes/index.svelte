@@ -32,6 +32,16 @@ onMount(async () => {
             <div class="text-white font-bitmap text-3xl pt-4 select-none" id="logo-text">
                 The Virtual North Atlantic Advanced Air Traffic System
             </div>
+            <div class="flex flex-row justify-between mt-10">
+                <a href="/fdd" class="border-2 rounded mr-20 px-4 py-2 hover:cursor-pointer scale-100 bg-blue-5 bg-opacity-0 transition duration-500 
+                hover:scale-110 hover:bg-opacity-100 font-bitmap font-normal tracking-wider text-lg">
+                    Access FDD
+                </a>
+                <a href="https://discord.gg/7bHtYNuxdx" target="_blank" class="border-2 rounded ml-20 px-4 py-2 hover:cursor-pointer scale-100 bg-discord_purple bg-opacity-0 transition duration-500 
+                hover:scale-110 hover:bg-opacity-100 font-bitmap font-normal tracking-wider text-lg">
+                    Join the Discord!
+                </a>
+            </div>
         </div>
         <div class="flex flex-col justify-end items-center h-1/3 font-bitmap font-normal text-2xl">
             <div class="pt-10 select-none" id="learn-more">
