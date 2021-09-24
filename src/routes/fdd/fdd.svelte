@@ -12,7 +12,7 @@
   let noData: boolean = true;
   onMount(async () => {
     // Bye bye homepage
-    site.setHome(false);
+    site.setSiteSection(2);
 
     // Start the fetcher
     dataHandler.runDataFetcher();
@@ -24,7 +24,7 @@
 
   onDestroy(async () => {
     // Hello homepage
-    site.setHome(true);
+    site.setSiteSection(0);
     clearInterval(dataHandler.acUpdateJob);
     clearInterval(dataHandler.tkUpdateJob);
   });

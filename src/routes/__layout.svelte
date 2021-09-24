@@ -3,22 +3,22 @@
   import * as dataHandler from "../typescript/fdd/data";
   import config from "../config.json";
   import * as site from "../typescript/site";
-import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
   // Externals
   let count: number = 0;
-  $: isHome = site.isHomePage;
+  $: siteSection = site.siteSection;
 
   // DOM updater
   // Component updater (50ms)
   setInterval(() => {
     count = dataHandler.relevantAircraftCount;
-    isHome = site.isHomePage;
+    siteSection = site.siteSection;
   }, 50);
 </script>
 
 <div class="flex flex-col h-screen">
-  {#if isHome}
+  {#if siteSection != 2}
     <div class="overflow-hidden"></div>
   {:else}
     <div class="flex justify-between items-center w-screen h-1/25 bg-blue-0 border-2 border-l-blue-10 border-t-blue-10 border-r-blue-10 border-b-blue-0">
